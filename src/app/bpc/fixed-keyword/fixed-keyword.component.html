@@ -1,0 +1,115 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="col-md-6">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          Fixed keywords definition
+        </div>
+        <div class="panel-body">
+          <input type="hidden" class="form-control" id="_id" name="_id" [(ngModel)]="fixed._id">
+          <input type="hidden" class="form-control" id="_rev" name="_rev" [(ngModel)]="fixed._rev">
+          <input type="hidden" class="form-control" id="Form" name="Form" [(ngModel)]="fixed.Form">
+          <form [formGroup]="fixedform">
+              <div>
+                <b>
+                  <font color="blue">(Please separate the keyword values with semicolon ";")</font>
+                </b>
+              </div>
+            <div class="form-group">
+            <label for="Keyword">Keyword
+                <span class="required">*</span>
+              </label>
+              <input type="text" class="form-control" placeholder="Enter keyword name" formControlName="keyword" id="keyword" name="keyword" [(ngModel)]="fixed.txFXKeyword">
+              <div *ngIf="fixedform.controls['keyword'].hasError('required') && submitAttempt" class="alert alert-danger">
+                Please Enter the Keyword
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="AM">AM</label>
+              <textarea rows="2" cols="100" class="form-control" placeholder="Enter values for AM" formControlName="valueAM" id="AM" name="AM"
+                [(ngModel)]="fixed.txFXKeyList"></textarea>
+            </div>
+            <div class="form-group">
+              <label for="AP">AP</label>
+              <textarea rows="2" cols="100" class="form-control" placeholder="Enter values for AP" formControlName="valueAP" id="AP" name="AP"
+                [(ngModel)]="fixed.txFXKeyListAP"></textarea>
+            </div>
+            <div class="form-group">
+              <label for="EMEA">EMEA</label>
+              <textarea rows="2" cols="100" class="form-control" placeholder="Enter values for EMEA" formControlName="valueEMEA" id="EMEA"
+                name="EMEA" [(ngModel)]="fixed.txFXKeyListEMEA"></textarea>
+            </div>
+            <div class="form-group">
+              <label for="LA">LA</label>
+              <textarea rows="2" cols="100" class="form-control" placeholder="Enter values for LA" formControlName="valueLA" id="LA" name="LA"
+                [(ngModel)]="fixed.txFXKeyListLA"></textarea>
+            </div>
+            <div class="form-group">
+              <label for="Japan">Japan</label>
+              <textarea rows="2" cols="100" class="form-control" placeholder="Enter values for Japan" formControlName="valueJapan" id="Japan"
+                name="Japan" [(ngModel)]="fixed.txFXKeyListJP"></textarea>
+            </div>
+            <div class="form-group">
+              <label for="GCG">GCG</label>
+              <textarea rows="2" cols="100" class="form-control" placeholder="Enter values for GCG" formControlName="valueGCG" id="GCG"
+                name="GCG" [(ngModel)]="fixed.txFXKeyListGCG"></textarea>
+            </div>
+            <div class="form-group">
+              <label for="Comments">Comments</label>
+              <textarea rows="2" cols="100" class="form-control" placeholder="Enter comments" formControlName="comments" id="Comments"
+                name="Comments" [(ngModel)]="fixed.txFXKeyComment"></textarea>
+            </div>
+            <div class="form-group">
+              <label for="Audit Trail">Audit Trail</label>
+              <textarea rows="2" cols="100" class="form-control" readonly placeholder="Audit Trail values" formControlName="audit" id="Audit" name="Audit"
+                [(ngModel)]="fixed.txFXAudit"></textarea>
+            </div>
+            <div style="width:100%; height:100%">
+
+              <button type="submit" (click)="save()" class="btn btn-primary">Add/Update</button>
+              <button type="submit" (click)="reset()" class="btn btn-primary">Reset</button>
+              <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#DeleteConfirmation">Delete</button> -->
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    
+    <div class="col-md-6">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          Fixed keywords definition records
+        </div>
+        <div class="panel-body">
+          <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border responsive hover"></table>
+        </div>
+      </div>
+    </div>
+    
+  </div>
+</div>
+
+
+<!--Delete Fixed-Keyword Form Modal Confirmation-->
+
+<div class="modal fade" id="DeleteConfirmation" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Delete Form</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          Please Confirm Do you Want to Delete?
+        </div>
+      </div>
+      <div class="modal-footer">
+        <a data-dismiss="modal" (click)="delete()" class="btn btn-primary">Yes</a>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+      </div>
+    </div>
+  </div>
+</div>

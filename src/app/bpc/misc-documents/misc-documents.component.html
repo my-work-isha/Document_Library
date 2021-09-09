@@ -1,0 +1,234 @@
+<!--Misc form -->
+<form #frm="ngForm">
+<div class="col-md-12">
+  <div class="col-md-12">
+    <div class="panel panel-primary">
+      <div class="panel-heading" id="panelhead-affix"  margin-bottom="1px">
+        <h4>Misc document: {{model.txtLogNo}}</h4>
+        
+            <div class="form-group" align="right">
+              <button [disabled]="isReadOnly || isLoading" *ngIf="model.lock_status !== '1'" type="submit" (click)="save('Save',frm)" class="btn btn-info">Save</button>
+              <!-- <button *ngIf="model.lock_status == '1' || isReadOnly == true" type="button" (click)="close()" class="btn btn-info">Close</button> -->
+              <button type="button" (click)="confirmClose(frm)" class="btn btn-info">Close</button>
+              <button [disabled]="isReadOnly || isLoading|| model.lock_status=='1'" *ngIf="model.txtStatus  === 'Created'" type="button"
+                class="btn btn-info" data-toggle="modal" data-target="#DeleteConfirmation">Delete</button>
+                <button [disabled]="isReadOnly || isLoading || model.lock_status=='1'" type="button" (click)="refreshMissingInfo('Save',frm)" class="btn btn-info">Refresh from Main doc</button>
+            </div>
+          
+      </div>
+      
+      <div class="row">
+        <div class="col-md-8">
+        </div>
+        <div class="col-md-4">
+        <span *ngIf="model._id !=''">
+        <a style="font-weight:bold" id="Copy form URL to clip board" align="right" (click)="copyDocLink()">Copy record URL to clipboard</a>
+        </span>
+        </div>
+      </div>
+	  
+      <div class="panel-body">
+        <div class="col-md-12">
+          <input type="hidden" class="form-control" id="dtcreated" name="dtcreated" [(ngModel)]="model.dtcreated">
+          <input type="hidden" class="form-control" id="dtmodified" name="dtmodified" [(ngModel)]="model.dtmodified">
+          <input type="hidden" class="form-control" id="_id" name="_id">
+          <input type="hidden" class="form-control" id="_rev" name="_rev">
+          <input type="hidden" class="form-control" id="Form" name="Form">
+          <input type="hidden" class="form-control" id="txtLAName" name="txtLAName">
+          <input type="hidden" class="form-control" id="txtAssistAnalyst" name="txtAssistAnalyst">
+          <input type="hidden" class="form-control" id="DocCreator" name="DocCreator">
+          <input type="hidden" class="form-control" id="dlgLogApprovers" name="dlgLogApprovers">
+          <input type="hidden" class="form-control" id="lock_status" name="lock_status">
+          
+            <fieldset [disabled]="isReadOnly || isLoading">
+              <div class="row">
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label for="txtStatus" id="label" class="control-label col-xs-offset-1 col-xs-5">Status:</label>
+                    <input type="text" class="col-xs-5" readonly id="txtStatus" name="txtStatus" [(ngModel)]="model.txtStatus">
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label for="signature" class="control-label col-xs-offset-3 col-xs-3">By:</label>
+                    <input type="text" class="col-xs-5" readonly id="signature" name="signature" [(ngModel)]="model.signature">
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label for="sigtimestamp" class="col-xs-2">On:</label>
+                    <input type="text" readonly class="col-xs-=5" id="sigtimestamp" name="sigtimestamp" [(ngModel)]="model.sigtimestamp">
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="txtLogNo">Log Number</label>
+                    <input readonly type="text" class="form-control" id="txtLogNo" name="txtLogNo" [(ngModel)]="model.txtLogNo">
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="txtChannel">Channel</label>
+                    <input readonly type="text" class="form-control" id="txtChannel" name="txtChannel" [(ngModel)]="model.txtChannel">
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="txtRvwType">Type of Review</label>
+                    <input readonly type="text" class="form-control" id="txtRvwType" name="txtRvwType" [(ngModel)]="model.txtRvwType">
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="txtRvwMethod">Method of Review</label>
+                    <input readonly type="text" class="form-control" id="txtRvwMethod" name="txtRvwMethod" [(ngModel)]="model.txtRvwMethod">
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="txtAttNameMisc" class="col-sm-20 control-label">Attachment Label</label>
+                    <input type="text" class="form-control" placeholder="Enter Attachment Label" id="txtAttNameMisc"
+                      name="txtAttNameMisc" [(ngModel)]="model.txtAttNameMisc">
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="rtAttachMisc">Attachment</label>
+                    <textarea rows="2" cols="100" class="form-control" placeholder="Enter Attachment" id="rtAttachMisc"
+                      name="rtAttachMisc" [(ngModel)]="model.rtAttachMisc"></textarea>
+                    <br>
+                    <label for="rtAttachMisc" class="btn btn-default btn-file">
+                      Drag and drop below    
+                  <input #fileInput1 type="file" id="rtAttachMisc" multiple (change)="getrtAttachMiscFiles($event,'getrtAttachMiscFiles')">
+                    </label>
+                  </div>
+                  <div id="rtAttachMiscFile"></div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="txCountry">Country</label>
+                    <input type="text" class="form-control" readonly id="txCountry" name="txCountry"
+                      [(ngModel)]="model.txCountry">
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="txState">IOT/GMU:</label>
+                    <input type="text" class="form-control" readonly id="txMajorMarket" name="txMajorMarket"
+                      [(ngModel)]="model.txMajorMarket">
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="txState">IMT/GMT:</label>
+                    <input type="text" class="form-control" readonly id="txGrowthMarket" name="txGrowthMarket"
+                      [(ngModel)]="model.txGrowthMarket">
+                  </div>
+                </div>
+              </div>
+              
+              <div class="row">
+                <div class="col-md-12">
+                  <br>
+                  <div class="form-group">
+                    <label for="txGrowthMarket">Note : Please ensure that any files or attatchments referenced inside a
+                      PDF
+                      file are also included as an actual file attatchment in the RDL document.</label>
+
+                  </div>
+                </div>
+              </div>
+              <br>
+            </fieldset>
+
+            <div class="panel panel-primary">
+              <div class="panel-heading">
+                <h4 class="panel-title">
+                  <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">
+                    <span class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></span>Audit Trail</a>
+                </h4>
+              </div>
+              <div id="collapse1" class="panel-collapse collapse">
+                <div class="panel-body">
+                  <fieldset [disabled]="isReadOnly || isLoading">
+                    <div class="row">
+                      <div class="col-md-12">
+                        <div class="form-group">
+                          <textarea rows="2" cols="100" class="form-control" id="txtPRAudit" name="txtPRAudit"
+                            [(ngModel)]="model.txtPRAudit" readonly></textarea>
+                        </div>
+                      </div>
+                    </div>
+                  </fieldset>
+                </div>
+              </div>
+            </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</form>
+
+<!--Delete MBP Form Modal Confirmation-->
+<fieldset [disabled]="isReadOnly || isLoading">
+  <div class="modal fade" id="DeleteConfirmation" tabindex="-1" role="dialog" aria-labelledby="Delete Form" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h5 class="modal-title">Delete form</h5>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            Please confirm do you want to Delete?
+          </div>
+        </div>
+        <div class="modal-footer">
+          <a data-dismiss="modal" (click)="delete()" class="btn btn-primary">Yes</a>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</fieldset>
+
+<!--Modal for confirm close-->
+<div class="modal fade" id="closeConfirmation" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h5 class="modal-title">Close Misc form</h5>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          Do you want save the Misc form before closing?
+        </div>
+      </div>
+      <div class="modal-footer">
+        <a data-dismiss="modal" (click)="save('saveNclose',frm)" class="btn btn-primary">Yes</a>
+        <a data-dismiss="modal" (click)="close()" class="btn btn-primary">No</a>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>

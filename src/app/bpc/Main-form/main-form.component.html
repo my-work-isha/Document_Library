@@ -1,0 +1,998 @@
+<!--RDL Main form -->
+<form #frm="ngForm">
+  <div class="col-md-12">
+    <div>
+      <div class="col-md-12">
+
+
+
+        <div class="panel panel-default">
+          <div class="panel-heading" id="panelhead-affix" margin-bottom="1px">
+
+            <h4>RDL Main Form: {{model.txtLogNo}}</h4>
+            <div class="row">
+              <div class="col-md-4">
+                <div class="form-group">
+                  <fieldset [disabled]="isReadOnly || isLoading">
+                    <div class="dropdown" *ngIf="(model.SaveFlag == 'Yes') &&  (model.lock_status !== '1')">
+                      <button class="btn btn-primary" align="right" type="button" id="dropdownMenu1"
+                        data-toggle="dropdown" aria-haspopup="true" position="fixed" aria-expanded="true">
+                        Create sub documents
+                        <span class="caret"></span>
+                      </button>
+                      <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                        <li><a routerLink="/allegation/create" (click)="storeMBPData()">Allegation</a></li>
+                        <li><a routerLink="/chwtrans/create" (click)="storeMBPData()">CHW Transaction</a></li>
+                        <li><a routerLink="/itsmtstrans/create" (click)="storeMBPData()">ITS/MTS/TSS Transaction</a>
+                        </li>
+                        <li><a routerLink="/swtransaction/create" (click)="storeMBPData()">SW Transaction</a></li>
+                        <li><a routerLink="/misc/create" (click)="storeMBPData()">Misc</a></li>
+                        <li><a routerLink="/chwswgtrans/create" (click)="storeMBPData()">CHW SWG Transaction</a></li>
+                        <li><a routerLink="/cfmbgftrans/create" (click)="storeMBPData()">CFM BGF Transaction</a></li>
+                      </ul>
+                      <span *ngIf="isAdmin">
+                        <button class="btn btn-primary" type="button" id="lockbutton1" data-toggle="modal"
+                          data-target="#LockConfirmation">
+                          Lock
+                        </button>
+                      </span>
+                    </div>
+                  </fieldset>
+                  <span *ngIf="model.lock_status == '1'">
+                    <button *ngIf="isAdmin && model.lock_status == '1'" class="btn btn-primary" type="button"
+                      id="lockbutton2" data-toggle="modal" data-target="#UnLockConfirmation">
+                      Unlock
+                    </button>
+                    <button *ngIf="model.lock_status == '1'" class="btn btn-primary" (click)="OpenPeerreviews()"
+                      type="button" id="peerreviewresults">
+                      Peer Review Results
+                    </button>
+                  </span>
+
+                </div>
+              </div>
+              <div class="col-md-8">
+                <div class="form-group">
+                  <p align="right">
+                    <!-- <div class="form-group" align="right"> -->
+                    <button [disabled]="isReadOnly || isLoading" *ngIf="model.lock_status !== '1'" type="submit"
+                      (click)="uniquelog('Save',frm)" class="btn btn-info">Save</button>
+                    <!-- <button [disabled]="isReadOnly || isLoading"
+                      *ngIf="(model.txtStatus !== 'Submitted for review') && (model.txtStatus !== 'Re-submitted') && (model.txtStatus !== 'Approved') &&( model._id !== '') && isSubmitter"
+                      type="button" class="btn btn-info" data-toggle="modal" data-target="#SubmitforReview">Submit
+                      for review</button> -->
+                    <!-- <button [disabled]="isReadOnly || isLoading"
+                      *ngIf="(model.txtStatus  === 'Submitted for review' || model.txtStatus === 'Re-submitted') && isReviewer"
+                      type="button" class="btn btn-info" data-toggle="modal" data-target="#Approve">Approve</button> -->
+                    <!-- <button [disabled]="isReadOnly || isLoading"
+                      *ngIf="(model.txtStatus  === 'Submitted for review' || model.txtStatus === 'Re-submitted') && isReviewer"
+                      type="button" class="btn btn-info" data-toggle="modal" data-target="#Reject">Reject</button> -->
+                    <!-- <button [disabled]="isReadOnly || isLoading" *ngIf="(model.txtStatus  === 'Approved')" type="button"
+                      class="btn btn-info" data-toggle="modal" data-target="#Rereview">Re-review</button> -->
+                    <button [disabled]="isReadOnly || isLoading " *ngIf="model._id !== ''" type="button"
+                      class="btn btn-info" data-toggle="modal" data-target="#RefreshInfo">Refresh
+                      info</button>
+                    <!-- <button *ngIf="model.lock_status == '1' || isReadOnly == true" type="button" (click)="close()"
+                      class="btn btn-info">Close</button> -->
+                    <button type="button" (click)="confirmClose(frm)" class="btn btn-info">Close</button>
+                    <button [disabled]="isReadOnly || isLoading || model.lock_status=='1'" *ngIf="model._id !== ''" type="button"
+                      class="btn btn-info" data-toggle="modal" data-target="#DeleteConfirmation">Delete</button>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <br>
+          <div class="row">
+            <div class="col-md-8">
+            </div>
+            <div class="col-md-4">
+              <span *ngIf="model._id !=''">
+                <a style="font-weight:bold" id="Copy form URL to clip board" align="right" margin-top="15px"
+                  (click)="copyDocLink()">Copy record URL to clipboard</a>
+              </span>
+            </div>
+          </div>
+          <div class="panel-body">
+            <div class="col-md-12">
+              <input type="hidden" class="form-control" id="dtcreated" name="dtcreated" [(ngModel)]="model.dtcreated">
+          <input type="hidden" class="form-control" id="dtmodified" name="dtmodified" [(ngModel)]="model.dtmodified">
+              <input type="hidden" class="form-control" id="_id" name="_id" [(ngModel)]="model._id">
+              <input type="hidden" class="form-control" id="_rev" name="_rev" [(ngModel)]="model._rev">
+              <input type="hidden" class="form-control" id="Form" name="Form" [(ngModel)]="model.Form">
+              <input type="hidden" class="form-control" id="DocCreator" name="DocCreator"
+                [(ngModel)]="model.DocCreator">
+              <input type="hidden" class="form-control" id="docid" name="docid" [(ngModel)]="model.docid">
+              <input type="hidden" class="form-control" id="lock_status" name="lock_status"
+                [(ngModel)]="model.lock_status">
+
+              <fieldset [disabled]="isReadOnly || isLoading">
+
+                <div class="row">
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label for="txtStatus" id="label" class="control-label col-xs-offset-1 col-xs-3">Status:</label>
+                      <!-- <label for="signature" class="col-xs-2">Status :</label> -->
+                      <input type="text" class="col-xs-5" readonly id="txtStatus" name="txtStatus"
+                        [(ngModel)]="model.txtStatus">
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label for="signature" class="col-xs-2">By:</label>
+                      <input type="text" class="col-xs-=5" readonly id="signature" name="signature"
+                        [(ngModel)]="model.signature">
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label for="sigtimestamp" class="col-xs-2">On:</label>
+                      <input type="text" readonly class="col-xs-=5" id="sigtimestamp" name="sigtimestamp"
+                        [(ngModel)]="model.sigtimestamp">
+                    </div>
+                  </div>
+                </div>
+
+                <div *ngIf="model.lock_status === '1'">
+                  <p style="color:red;text-align:center">This document is locked and cannot be edited</p>
+
+                </div>
+
+                <div class="row">
+                  <!-- <div class="col-md-8"> -->
+                  <div class="col-md-12 ">
+                    <div class="col-md-4 no-padding">
+                      <div class="form-group">
+                        <label for="txtLogNo">Log Number<span style="color:red">*</span></label>
+                        <input type="text" class="form-control" placeholder="Enter Log Number" id="txtLogNo"
+                          name="txtLogNo" [(ngModel)]="model.txtLogNo" (change)="getReviewers(model.txtLogNo)">
+                      </div>
+                      <div *ngIf="model.txtLogNo==''" class="alert alert-danger">
+                        Please Enter Log Number:
+                      </div>
+                    </div>
+                    <div class="col-md-4" align:right>
+                      <div class="form-group">
+                        <label>&nbsp;</label><br>
+                        <button type="button" (click)="fetchlogDetails()" class="btn btn-primary" data-toggle="modal"
+                          data-target="#fetchlogDetails">
+                          Fetch log details from BPC Ops
+                        </button>
+                      </div>
+                    </div>
+
+                    <!-- </div> -->
+
+                    <div class="col-md-4 no-padding">
+                      <div class="form-group">
+                        <label for="txtChannel">Status:</label>
+                        <select id="txtChannel" class="form-control" name="txtStatusNew"
+                          [(ngModel)]="model.txtStatusNew" (change)="UpdateStatus()">
+                          <option value="">Select status</option>
+                          <option *ngFor="let status of Status" value={{status}}>
+                            {{status}}
+                          </option>
+                        </select>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+                <h4>Basic Details:</h4>
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="txtCPN">Current Primary Name:</label>
+                      <input type="text" class="form-control" id="txtCPN" name="txtCPN" [(ngModel)]="model.txtCPN">
+
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="txtChannel">Brand/Channel:</label>
+                      <select id="txtChannel" class="form-control" name="txtChannel" [(ngModel)]="model.txtChannel">
+                        <option value="">Select Brand/Channel</option>
+                        <option *ngFor="let mainchanne of mainchannel" value={{mainchanne}}>
+                          {{mainchanne}}
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="txtLAName">Lead Analyst (enter single ID)<br>(IBM email address e.g.
+                        jdoe@us.ibm.com):</label>
+                      <input type="text" class="form-control" (change)="emailValidation(model.txtLAName,'txtLAName')"
+                        placeholder="Enter intranet id of the Lead Analyst" id="txtLAName" name="txtLAName"
+                        [(ngModel)]="model.txtLAName">
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="txtAssistAnalyst">Assist Analyst (enter single/multiple IDs using , seperator)<br>(IBM
+                        email address e.g. jdoe@us.ibm.com):</label>
+                      <input type="text" class="form-control"
+                        (change)="emailValidation(model.txtAssistAnalyst,'txtAssistAnalyst')" id="txtAssistAnalyst"
+                        name="txtAssistAnalyst" multiple [(ngModel)]="model.txtAssistAnalyst">
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="txtRvwType">Type of Review:</label>
+                      <input type="text" class="form-control" id="txtRvwType" name="txtRvwType"
+                        [(ngModel)]="model.txtRvwType">
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="txtRvwMethod">Method of Review:</label>
+                      <input type="text" class="form-control" id="txtRvwMethod" name="txtRvwMethod"
+                        [(ngModel)]="model.txtRvwMethod">
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="txCountry" class="col-sm-20 control-label">Country:</label>
+                      <div>
+                        <select id="txCountry" class="form-control" name="txCountry" [(ngModel)]="model.txCountry"
+                          (change)="updateIMTIOT()">
+                          <option value="">Select Country</option>
+                          <option *ngFor="let country of countrynames" value={{country}}>
+                            {{country}}
+                          </option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="txState">IOT/GMU:</label>
+                      <input type="text" class="form-control" readonly id="txMajorMarket" name="txMajorMarket"
+                        [(ngModel)]="model.txMajorMarket">
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="txState">IMT/GMT:</label>
+                      <input type="text" class="form-control" readonly id="txGrowthMarket" name="txGrowthMarket"
+                        [(ngModel)]="model.txGrowthMarket">
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="dtOrgDate" class="col-sm-20 control-label">Origination/Log Date (mm/dd/yyyy):</label>
+                      <input type="text" class="form-control" id="dtOrgDate" name="dtOrgDate"
+                        [(ngModel)]="model.dtOrgDate">
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="dtACRBDate">BPCRB Date (mm/dd/yyyy):</label>
+                      <input type="text" class="form-control" id="dtACRBDate" name="dtACRBDate"
+                        [(ngModel)]="model.dtACRBDate">
+                      <div *ngIf="(model.dtACRBDate=='' && model.txtStatusNew=='Closed' && submitAttempt)"
+                        class="alert alert-danger">
+                        Please make sure that BPCRB Date is filled (By fetching log details from WW BPC Ops)before
+                        Closed
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="dlgLogApprovers" class="col-sm-20 control-label">Reviewer:</label>
+                      <div>
+                        <select id="dlgLogApprovers" class="form-control" name="dlgLogApprovers"
+                          [(ngModel)]="model.dlgLogApprovers">
+                          <option value="">Select Reviewer</option>
+                          <option *ngFor="let mainlogap of mainlogapp" value={{mainlogap}}>
+                            {{mainlogap}}
+                          </option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="txtSrcAllegation">Source of Allegation:</label>
+                      <input type="text" class="form-control" id="txtSrcAllegation" name="txtSrcAllegation"
+                        [(ngModel)]="model.txtSrcAllegation">
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="rdwbook">Workbook required:</label>
+                      <label class="radio-inline">
+                        <input type="radio" id="rdwbook" name="rdwbook" [(ngModel)]="model.rdwbook"
+                          value="Yes">Yes</label>
+                      <label class="radio-inline">
+                        <input type="radio" id="rdwbook" name="rdwbook" [(ngModel)]="model.rdwbook"
+                          value="No">No</label>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="lbThirdPartyName">Third Party Name:</label>
+                      <label class="radio-inline">
+                        <input type="radio" id="lbThirdPartyName" name="lbThirdPartyName"
+                          [(ngModel)]="model.lbThirdPartyName" value="None">None</label>
+                      <label class="radio-inline">
+                        <input type="radio" id="lbThirdPartyName" name="lbThirdPartyName"
+                          [(ngModel)]="model.lbThirdPartyName" value="Deloitte">Deloitte</label>
+                      <label class="radio-inline">
+                        <input type="radio" id="lbThirdPartyName" name="lbThirdPartyName"
+                          [(ngModel)]="model.lbThirdPartyName" value="KPMG">KPMG</label>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-6">
+
+                    <div class="form-group">
+                      <label for="txtComments">Rejection Comments:</label>
+                      <textarea rows="3" cols="50" class="form-control" id="txtComments" name="txtComments"
+                        [(ngModel)]="model.txtComments"></textarea>
+                    </div>
+                  </div>
+
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="rbEuroUnionFlag">European Union Review:</label>
+                      <label class="radio-inline">
+                        <input type="radio" id="rbEuroUnionFlag" name="rbEuroUnionFlag"
+                          [(ngModel)]="model.rbEuroUnionFlag" value="Yes">Yes</label>
+                      <label class="radio-inline">
+                        <input type="radio" id="rbEuroUnionFlag" name="rbEuroUnionFlag"
+                          [(ngModel)]="model.rbEuroUnionFlag" value="No">No</label>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-12">
+
+                    <div class="form-group">
+                      <label for="txGrowthMarket">Note: Please ensure that any files or attachments referenced inside a
+                        PDF file are also included as an actual file attachment in the RDL document
+                      </label>
+                    </div>
+                  </div>
+                </div>
+
+                <table class="table table-bordered table-hover" id="tab_logic">
+                  <thead>
+                    <tr>
+                      <th class="text-center">
+                      </th>
+                      <th class="text-center">
+                        Document Type
+                      </th>
+                      <th class="text-center">
+                        Comments (if a cell is left blank, either indicate N/A; reference where it can be found,
+                        including page #s
+                        if applicable;
+                        or explain why it is left blank)
+                      </th>
+                      <th class="text-center">
+                        Attachments
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                      </td>
+                      <td>
+                        <label> Review Notification?</label>
+                      </td>
+                      <td>
+                        <label for="txtReviewNotif"></label>
+                        <textarea rows="3" cols="50" class="form-control" id="txtReviewNotif" name="txtReviewNotif"
+                          [(ngModel)]="model.txtReviewNotif"></textarea>
+                      </td>
+                      <td>
+                        <label for="rtReviewNotif"></label>
+                        <input type="text" class="form-control" id="rtReviewNotif" name="rtReviewNotif"
+                          [(ngModel)]="model.rtReviewNotif"><br>
+                        <label for="rtReviewNotif" class="btn btn-default btn-file">
+                          Drag and drop here
+                          <input #fileInput1 type="file" id="rtReviewNotifAttach" multiple
+                            (change)="getrtReviewNotifAttachFiles($event,'getrtReviewNotifAttachFiles')">
+                        </label>
+                        <div id="txtReviewNotifFile"></div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                      </td>
+                      <td>
+                        <label> Universe?</label>
+                      </td>
+                      <td>
+                        <label for="txtUniverse"></label>
+                        <textarea rows="3" cols="50" class="form-control" id="txtUniverse" name="txtUniverse"
+                          [(ngModel)]="model.txtUniverse"></textarea>
+                      </td>
+                      <td>
+                        <label for="rtUniverse"></label>
+                        <input type="text" class="form-control" id="rtUniverse" name="rtUniverse"
+                          [(ngModel)]="model.rtUniverse"><br>
+                        <label for="rtUniverse" class="btn btn-default btn-file">
+                          Drag and drop here
+                          <input #fileInput2 type="file" id="rtUniverseAttach" multiple
+                            (change)="getrtUniverseAttachFiles($event,'getrtUniverseAttachFiles')">
+                        </label>
+                        <div id="rtUniverseFile"></div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                      </td>
+                      <td>
+                        <label> Kickoff Meeting/Sample </label>
+                      </td>
+                      <td>
+                        <label for="txtKickoff"></label>
+                        <textarea rows="3" cols="50" class="form-control" id="txtKickoff" name="txtKickoff"
+                          [(ngModel)]="model.txtKickoff"></textarea>
+                      </td>
+                      <td>
+                        <label for="rtKickoff"></label>
+                        <input type="text" class="form-control" id="rtKickoff" name="rtKickoff"
+                          [(ngModel)]="model.rtKickoff"><br>
+                        <label for="rtKickoff" class="btn btn-default btn-file">
+                          Drag and drop here
+                          <input #fileInput3 type="file" id="rtKickoffAttach" multiple
+                            (change)="getrtKickoffAttachFiles($event,'getrtKickoffAttachFiles')">
+                        </label>
+                        <div id="rtKickoffFile"></div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                      </td>
+                      <td>
+                        <label> Close Out Mtg </label>
+                      </td>
+                      <td>
+                        <label for="txtCloseout"></label>
+                        <textarea rows="3" cols="50" class="form-control" id="txtCloseout" name="txtCloseout"
+                          [(ngModel)]="model.txtCloseout"></textarea>
+                      </td>
+                      <td>
+                        <label for="rtCloseout"></label>
+                        <input type="text" class="form-control" id="rtCloseout" name="rtCloseout"
+                          [(ngModel)]="model.rtCloseout"><br>
+                        <label for="rtCloseout" class="btn btn-default btn-file">
+                          Drag and drop here
+                          <input #fileInput4 type="file" id="rtCloseoutAttach" multiple
+                            (change)="getrtCloseoutAttachFiles($event,'getrtCloseoutAttachFiles')">
+                        </label>
+                        <div id="rtCloseoutFile"></div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                      </td>
+                      <td>
+                        <label> Initial Findings(10 day letter)</label>
+                      </td>
+                      <td>
+                        <label for="txtInitialFindings"></label>
+                        <textarea rows="3" cols="50" class="form-control" id="txtInitialFindings"
+                          name="txtInitialFindings" [(ngModel)]="model.txtInitialFindings"></textarea>
+                      </td>
+                      <td>
+                        <label for="rtInitialFindings"></label>
+                        <input type="text" class="form-control" id="rtInitialFindings" name="rtInitialFindings"
+                          [(ngModel)]="model.rtInitialFindings"><br>
+                        <label for="rtInitialFindings" class="btn btn-default btn-file">
+                          Drag and drop here
+                          <input #fileInput5 type="file" id="rtInitialFindingsAttach" multiple
+                            (change)="getrtInitialFindingsAttachFiles($event,'getrtInitialFindingsAttachFiles')">
+                        </label>
+                        <div id="rtInitialFindingsFile"></div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                      </td>
+                      <td>
+                        <label> Final Findings</label>
+                      </td>
+                      <td>
+                        <label for="txtFinalFindings"></label>
+                        <textarea rows="3" cols="50" class="form-control" id="txtFinalFindings" name="txtFinalFindings"
+                          [(ngModel)]="model.txtFinalFindings"></textarea>
+                      </td>
+                      <td>
+                        <label for="rtFinalFindings"></label>
+                        <input type="text" class="form-control" id="rtFinalFindings" name="rtFinalFindings"
+                          [(ngModel)]="model.rtFinalFindings"><br>
+                        <label for="rtFinalFindings" class="btn btn-default btn-file">
+                          Drag and drop here
+                          <input #fileInput6 type="file" id="rtFinalFindingsAttach" multiple
+                            (change)="getrtFinalFindingsAttachFiles($event,'getrtFinalFindingsAttachFiles')">
+                        </label>
+                        <div id="rtFinalFindingsFile"></div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                      </td>
+                      <td>
+                        <label> Fact Sheet?</label>
+                      </td>
+                      <td>
+                        <label for="txtFSheet"></label>
+                        <textarea rows="3" cols="50" class="form-control" id="txtFSheet" name="txtFSheet"
+                          [(ngModel)]="model.txtFSheet"></textarea>
+                      </td>
+                      <td>
+                        <label for="rtFSheet"></label>
+                        <input type="text" class="form-control" id="rtFSheet" name="rtFSheet"
+                          [(ngModel)]="model.rtFSheet"><br>
+                        <label for="rtFSheet" class="btn btn-default btn-file">
+                          Drag and drop here
+                          <input #fileInput7 type="file" id="rtFSheetAttach" multiple
+                            (change)="getrtFSheetAttachFiles($event,'getrtFSheetAttachFiles')">
+                        </label>
+                        <div id="rtFSheetFile"></div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                      </td>
+                      <td>
+                        <label> BPCRB Letter?</label>
+                      </td>
+                      <td>
+                        <label for="txtBPCRB"></label>
+                        <textarea rows="3" cols="50" class="form-control" id="txtBPCRB" name="txtBPCRB"
+                          [(ngModel)]="model.txtBPCRB"></textarea>
+                      </td>
+                      <td>
+                        <label for="rtBPCRB"></label>
+                        <input type="text" class="form-control" id="rtBPCRB" name="rtBPCRB" [(ngModel)]="model.rtBPCRB"><br>
+                        <label for="rtBPCRB" class="btn btn-default btn-file">
+                          Drag and drop here
+                          <input #fileInput8 type="file" id="rtBPCRBAttach" multiple
+                            (change)="getrtBPCRBAttachFiles($event,'getrtBPCRBAttachFiles')">
+                        </label>
+                        <div id="rtBPCRBFile"></div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                      </td>
+                      <td>
+                        <label> Escalation Letter?</label>
+                      </td>
+                      <td>
+                        <label for="txtEscalationLetter"></label>
+                        <textarea rows="3" cols="50" class="form-control" id="txtEscalationLetter"
+                          name="txtEscalationLetter" [(ngModel)]="model.txtEscalationLetter"></textarea>
+                      </td>
+                      <td>
+                        <label for="rtEscalationLetter"></label>
+                        <input type="text" class="form-control" id="rtEscalationLetter" name="rtEscalationLetter"
+                          [(ngModel)]="model.rtEscalationLetter"><br>
+                        <label for="rtEscalationLetter" class="btn btn-default btn-file">
+                          Drag and drop here
+                          <input #fileInput9 type="file" id="rtEscalationLetterAttach" multiple
+                            (change)="getrtEscalationLetterAttachFiles($event,'getrtEscalationLetterAttachFiles')">
+                        </label>
+                        <div id="rtEscalationLetterFile"></div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                      </td>
+                      <td>
+                        <label> Recovery Documentation?</label>
+                      </td>
+                      <td>
+                        <label for="txtRecovery"></label>
+                        <textarea rows="3" cols="50" class="form-control" id="txtRecovery" name="txtRecovery"
+                          [(ngModel)]="model.txtRecovery"></textarea>
+                      </td>
+                      <td>
+                        <label for="rtRecovery"></label>
+                        <input type="text" class="form-control" id="rtRecovery" name="rtRecovery"
+                          [(ngModel)]="model.rtRecovery"><br>
+                        <label for="rtRecovery" class="btn btn-default btn-file">
+                          Drag and drop here
+                          <input #fileInput10 type="file" id="rtRecoveryAttach" multiple
+                            (change)="getrtRecoveryAttachFiles($event,'getrtRecoveryAttachFiles')">
+                        </label>
+                        <div id="rtRecoveryFile"></div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                      </td>
+                      <td>
+                        <label> Sales Review Workbook(s)</label>
+                      </td>
+                      <td>
+                        <label for="txtSalesReview"></label>
+                        <textarea rows="3" cols="50" class="form-control" id="txtSalesReview" name="txtSalesReview"
+                          [(ngModel)]="model.txtSalesReview"></textarea>
+                      </td>
+                      <td>
+                        <label for="rtSalesReview"></label>
+                        <input type="text" class="form-control" id="rtSalesReview" name="rtSalesReview"
+                          [(ngModel)]="model.rtSalesReview"><br>
+                        <label for="rtSalesReview" class="btn btn-default btn-file">
+                          Drag and drop here
+                          <input #fileInput11 type="file" id="rtSalesReviewAttach" multiple
+                            (change)="getrtSalesReviewAttachFiles($event,'getrtSalesReviewAttachFiles')">
+                        </label>
+                        <div id="rtSalesReviewFile"></div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                      </td>
+                      <td>
+                        <label> Failure To Respond?</label>
+                      </td>
+                      <td>
+                        <label for="txtFailure2Respond"></label>
+                        <textarea rows="3" cols="50" class="form-control" id="txtFailure2Respond"
+                          name="txtFailure2Respond" [(ngModel)]="model.txtFailure2Respond"></textarea>
+                      </td>
+                      <td>
+                        <label for="rtFailure2Respond"></label>
+                        <input type="text" class="form-control" id="rtFailure2Respond" name="rtFailure2Respond"
+                          [(ngModel)]="model.rtFailure2Respond"><br>
+                        <label for="rtFailure2Respond" class="btn btn-default btn-file">
+                          Drag and drop here
+                          <input #fileInput12 type="file" id="rtFailure2RespondAttach" multiple
+                            (change)="getrtFailure2RespondAttachFiles($event,'getrtFailure2RespondAttachFiles')">
+                        </label>
+                        <div id="rtFailure2RespondFile"></div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                      </td>
+                      <td>
+                        <label> Misc, Emails & Letters? </label>
+                      </td>
+                      <td>
+                        <label for="txtMisc"></label>
+                        <textarea rows="3" cols="50" class="form-control" id="txtMisc" name="txtMisc"
+                          [(ngModel)]="model.txtMisc"></textarea>
+                      </td>
+                      <td>
+                        <label for="rtMisc"></label>
+                        <input type="text" class="form-control" id="rtMisc" name="rtMisc" [(ngModel)]="model.rtMisc"><br>
+                        <label for="rtMisc" class="btn btn-default btn-file">
+                          Drag and drop here
+                          <input #fileInput13 type="file" id="rtMiscAttach" multiple
+                            (change)="getrtMiscAttachFiles($event,'getrtMiscAttachFiles')">
+                        </label>
+                        <div id="rtMiscFile"></div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                      </td>
+                      <td>
+                        <label> Termination Emails & Letters?</label>
+                      </td>
+                      <td>
+                        <label for="txtTerminationEmails"></label>
+                        <textarea rows="3" cols="50" class="form-control" id="txtTerminationEmails"
+                          name="txtTerminationEmails" [(ngModel)]="model.txtTerminationEmails"></textarea>
+                      </td>
+                      <td>
+                        <label for="rtTerminationEmails"></label>
+                        <input type="text" class="form-control" id="rtTerminationEmails" name="rtTerminationEmails"
+                          [(ngModel)]="model.rtTerminationEmails"><br>
+                        <label for="rtTerminationEmails" class="btn btn-default btn-file">
+                          Drag and drop here
+                          <input #fileInput14 type="file" id="rtTerminationEmailsAttach" multiple
+                            (change)="getrtTerminationEmailsAttachFiles($event,'getrtTerminationEmailsAttachFiles')">
+                        </label>
+                        <div id="rtTerminationEmailsFile"></div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                      </td>
+                      <td>
+                        <label> Other Attachments <font color="red">(Please attach greater than 30mb files only and click on 'Upload' button)</font></label>
+                      </td>
+                      <td>
+                        <label for="rtOtherattachments"></label>
+                        <input type="text" class="form-control" id="rtOtherattachments" name="rtOtherattachments"
+                          [(ngModel)]="model.rtOtherattachments"><br>
+                        <label for="rtOtherattachments" class="btn btn-default btn-file">                          
+                          Drag and drop here
+                          <input #fileInput15 type="file" id="OtherattachmentsAttach" multiple
+                            (change)="getrtOtherattachmentsAttachFiles($event,'getrtOtherattachments')">
+                        </label>
+                        <div id="rtOtherFile"></div>
+                      </td>
+                      <td>
+                        <button [disabled]="isReadOnly || isLoading || model.lock_status=='1'" type="submit"
+                        (click)="uploadOtherFile()" class="btn btn-info">Upload</button>   
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label for="txGeoID">Note : Page numbers are only populated for those bodies of documents which
+                        are
+                        being shipped for scanning to the control desk.
+                      </label>
+
+                    </div>
+                  </div>
+                </div>
+
+                <h4>Audit Trail:</h4>
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <textarea rows="2" cols="100" class="form-control" id="txtMainAudit" name="txtMainAudit"
+                        [(ngModel)]="model.txtMainAudit" readonly></textarea>
+                    </div>
+                  </div>
+                </div>
+
+              </fieldset>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+
+<fieldset [disabled]="isReadOnly || isLoading">
+  <!--Delete MBP Form Modal Confirmation-->
+  <div class="modal fade" id="DeleteConfirmation" tabindex="-1" role="dialog" aria-labelledby="Delete Form"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h5 class="modal-title">Delete Form</h5>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            Please confirm do you want to Delete?
+          </div>
+        </div>
+        <div class="modal-footer">
+          <a data-dismiss="modal" (click)="deleteMainForm()" class="btn btn-primary">Yes</a>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--Approve Form Modal Confirmation-->
+  <div class="modal fade" id="Approve" tabindex="-1" role="dialog" aria-labelledby="Delete Form" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h5 class="modal-title">Approve Form</h5>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            Please confirm do you want to Approve?
+          </div>
+        </div>
+        <div class="modal-footer">
+          <a data-dismiss="modal" (click)="saveForAllActions('approve',frm)" class="btn btn-primary">Yes</a>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--Reject Form Modal Confirmation-->
+  <div class="modal fade" id="Reject" tabindex="-1" role="dialog" aria-labelledby="Delete Form" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h5 class="modal-title">Reject Form</h5>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            Please confirm do you want to Reject?
+          </div>
+        </div>
+        <div class="modal-footer">
+          <a data-dismiss="modal" (click)="saveForAllActions('reject',frm)" class="btn btn-primary">Yes</a>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--SubmitforReview Form Modal Confirmation-->
+  <div class="modal fade" id="SubmitforReview" tabindex="-1" role="dialog" aria-labelledby="Delete Form"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h5 class="modal-title">Submit for Review</h5>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            Please confirm do you want to Submit for Review?
+          </div>
+        </div>
+        <div class="modal-footer">
+          <a data-dismiss="modal" (click)="submitValidationCheck(frm,'')" class="btn btn-primary">Yes</a>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--Re-review Form Modal Confirmation-->
+  <div class="modal fade" id="Rereview" tabindex="-1" role="dialog" aria-labelledby="Delete Form" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h5 class="modal-title">Submit for Re-review</h5>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            Please confirm do you want to Submit for Re-review?
+          </div>
+        </div>
+        <div class="modal-footer">
+          <a data-dismiss="modal" (click)="saveForAllActions('rereview',frm)" class="btn btn-primary">Yes</a>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--Refresh Info Form Modal Confirmation-->
+  <div class="modal fade" id="RefreshInfo" tabindex="-1" role="dialog" aria-labelledby="Delete Form" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h5 class="modal-title">Refresh Info</h5>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            Please confirm do you want to Refresh Info?
+          </div>
+        </div>
+        <div class="modal-footer">
+          <a data-dismiss="modal" (click)="fetchlogDetails()" class="btn btn-primary">Yes</a>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--Lock Form Modal Confirmation-->
+  <div class="modal fade" id="LockConfirmation" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h5 class="modal-title">Lock documents</h5>
+        </div>
+        <div class="modal-body">
+          <div class="form-group" *ngIf="model.txtStatus  !== 'Approved'">
+            Main doc and all its child docs with log Number {{model.txtLogNo}} will be locked. Do you want to continue?
+          </div>
+
+          <div class="form-group" *ngIf="model.txtStatus  === 'Approved'">
+            By clicking this, all the children docs also will be locked. Do you want to continue?
+          </div>
+
+        </div>
+        <div class="modal-footer">
+          <a data-dismiss="modal" (click)="Lockdoc()" class="btn btn-primary">Yes</a>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--UnLock Form Modal Confirmation-->
+  <div class="modal fade" id="UnLockConfirmation" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h5 class="modal-title">Unlock documents</h5>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            By clicking this, all the children docs also will be unlocked. Do you want to continue?
+          </div>
+        </div>
+        <div class="modal-footer">
+          <a data-dismiss="modal" (click)="Unlockdoc()" class="btn btn-primary">Yes</a>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--Modal for close confirmation-->
+  <div class="modal fade" id="closeConfirmation" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h5 class="modal-title">Close Main form</h5>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            Do you want to save the Main form before closing?
+          </div>
+        </div>
+        <div class="modal-footer">
+          <a data-dismiss="modal" (click)="uniquelog('saveNclose',frm)" class="btn btn-primary">Yes</a>
+          <a data-dismiss="modal" (click)="close()" class="btn btn-primary">No</a>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</fieldset>
+

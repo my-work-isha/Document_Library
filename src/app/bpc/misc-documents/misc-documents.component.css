@@ -1,0 +1,16 @@
+.delete{
+    color:red;
+  }
+
+  h4 {
+    margin-top: 0;
+    margin-bottom:0;
+}
+
+#label {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  margin-right: -10px;
+}
+input[type=file] { width: 500px; height:40px;}

@@ -1,0 +1,72 @@
+<div class="row">
+  <div class="col-md-12">
+      <div class="panel panel-default">
+          <div class="panel-heading">
+            <form action="searchBtn('clickAction')">
+              <div class="pull-right">
+                <input type="text" (input)="refreshData()" pInputText size="25" [(ngModel)]="searchValue" 
+                  id="searchValue" name="searchValue" placeholder="Search value">
+                <button type="submit" class="btn btn-primary" id="searchBtn" (click)="searchBtn('clickAction')">Search</button>
+              </div>
+              <button type="button" class="btn btn-primary" (click)="CreateMainDocument()">Create Main document</button>
+              <button type="button" class="btn btn-info btn-sm" (click)="expandAll()" title="Expand all">
+                <span class="glyphicon glyphicon-plus"></span>
+              </button>
+              <button type="button" class="btn btn-info btn-sm" (click)="collapseAll()" title="Collapse all">
+                <span class="glyphicon glyphicon-minus"></span>
+              </button>
+            </form>
+          </div>
+          
+          <div class="panel-body table-responsive">
+              
+              <div *ngIf="geo=='Myreviews' || geo=='MyreviewsAM' || geo=='MyreviewsAP' || geo=='MyreviewsEMEA' || geo=='MyreviewsLA' || geo=='MyreviewsJAPAN'|| geo=='MyreviewsGCG'">
+                  
+                  <ay-treeTable [value]="nodes.data" selectionMode="single" [(selection)]="selectedRows" (onNodeSelect)="nodeSelect($event)"
+                    [tableStyle]="{'table-layout': 'fixed'}" [rows]="100" [paginator]="true">  
+                    <ay-column field="catName" header="Analyst" [style]="{'width':'200px'}">
+                      <ng-template let-col let-node="rowData" pTemplate="body">
+                        <span>{{node.data[col.field]}}</span>
+                      </ng-template>
+                    </ay-column>
+                    <ay-column field="txtLogNo" header="Log No." [style]="{'width':'150px', 'text-align': 'left'}"></ay-column>
+                    <ay-column field="Form" header="Form name" [style]="{'width':'200px', 'text-align': 'left'}"></ay-column>
+                    <ay-column field="txtCPN" header="Legal name" [style]="{'width':'220px', 'text-align': 'left'}"></ay-column>
+                    <ay-column field="txtStatus" header="Status" [style]="{'width':'220px', 'text-align': 'left'}"></ay-column>
+                    <ay-column field="txtChannel" header="Channel" [style]="{'width':'220px', 'text-align': 'left'}"></ay-column>
+                    <ay-column field="txtLAName" header="Lead Analyst" [style]="{'width':'220px', 'text-align': 'left'}"></ay-column>
+                    <ay-column field="txtAssistAnalyst" header="Assist Analyst" [style]="{'width':'220px', 'text-align': 'left'}"></ay-column>
+                    <ay-column field="dlgLogApprovers" header="Reviewer" [style]="{'width':'220px', 'text-align': 'left'}"></ay-column>
+                    <ay-column field="txtRvwType" header="Type of Review" [style]="{'width':'150px', 'text-align': 'left'}"></ay-column>
+                    <ay-column field="txtRvwMethod" header="Method of Review" [style]="{'width':'150px', 'text-align': 'left'}"></ay-column>
+                    <ay-column field="dtOrgDate" header="Origination/Log date" [style]="{'width':'220px', 'text-align': 'left'}"></ay-column>
+                    <ay-column field="dtACRBDate" header="BPCRB date" [style]="{'width':'220px', 'text-align': 'left'}"></ay-column>  
+                  </ay-treeTable>
+                </div>
+
+          <div *ngIf="geo!='Myreviews' && geo!='MyreviewsAM' && geo!='MyreviewsAP' && geo!='MyreviewsEMEA' && geo!='MyreviewsLA' && geo!='MyreviewsJAPAN' && geo!= 'MyreviewsGCG'">
+            
+            <ay-treeTable [value]="nodes.data" selectionMode="single" [(selection)]="selectedRows" (onNodeSelect)="nodeSelect($event)"
+              [tableStyle]="{'table-layout': 'fixed', 'display': 'block', 'height': '400px', 'overflow-x': 'scroll', 'overflow-y': 'scroll'}" 
+              [rows]="100" [paginator]="true">
+              <ay-column field="txtLogNo" header="Log number" [style]="{'width':'220px'}">
+                <ng-template let-col let-node="rowData" pTemplate="body">
+                  <span>{{node.data[col.field]}}</span>
+                </ng-template>
+              </ay-column>
+              <ay-column field="Form" header="Form name" [style]="{'width':'300px', 'text-align': 'left'}"></ay-column>
+              <ay-column field="txtCPN" header="Legal name" [style]="{'width':'220px', 'text-align': 'left'}"></ay-column>
+              <ay-column field="txtChannel" header="Channel" [style]="{'width':'220px', 'text-align': 'center'}"></ay-column>
+              <ay-column field="txtLAName" header="Lead Analyst" [style]="{'width':'220px', 'text-align': 'center'}"></ay-column>
+              <ay-column field="txtAssistAnalyst" header="Assist Analyst" [style]="{'width':'220px', 'text-align': 'center'}"></ay-column>
+              <ay-column field="txtRvwType" header="Type of Review" [style]="{'width':'150px', 'text-align': 'center'}"></ay-column>
+              <ay-column field="txtRvwMethod" header="Method of Review" [style]="{'width':'150px', 'text-align': 'center'}"></ay-column>
+              <ay-column field="dtOrgDate" header="Origination/Log date" [style]="{'width':'220px', 'text-align': 'center'}"></ay-column>
+              <ay-column field="dtACRBDate" header="BPCRB date" [style]="{'width':'220px', 'text-align': 'center'}"></ay-column>
+            </ay-treeTable>
+        </div>
+      </div>
+     </div>
+  </div>
+</div>
+

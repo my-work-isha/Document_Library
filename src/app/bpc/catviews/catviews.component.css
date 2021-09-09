@@ -1,0 +1,8 @@
+a {
+    cursor: pointer;
+} 
+
+.search_right_align {
+  float:right;
+  margin-bottom:10px;
+}

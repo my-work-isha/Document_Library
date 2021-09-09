@@ -1,0 +1,27 @@
+#menu-toggle {
+    text-decoration: none;
+    float: left;
+    color: #fff;
+    padding-right: 15px;
+}
+
+.navbar{
+  background-color: #0061ff;
+}
+.navbar a{
+  color: #fff;
+}
+.navbar a:hover{
+  color: #0061ff;
+}
+.navbar .navbar-brand a:hover{
+  color: #fff;
+}
+
+@media (max-width:767px) {
+    
+    #menu-toggle {
+      display: inline-block;
+    }
+    
+}

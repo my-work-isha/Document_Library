@@ -1,0 +1,101 @@
+ <!-- Sidebar -->
+<div id="sidebar-wrapper">
+    <nav id="spy">
+        <ul class="sidebar-nav nav">
+            <a href="#list1"   class="list-group-item expanded" data-toggle="collapse" aria-expanded="true"><span>All Geos</span></a>
+                <ul class="expand list-unstyled submenu" id="list1" role="menu">
+                   <li><a routerLink="welcome" routerLinkActive="active">Welcome to RDL</a></li>
+                   <li><a routerLink="Myreviews/Myreviews" routerLinkActive="active" (click)="setEmptySearchStr()">My Reviews</a></li>
+                   <li><a routerLink="ByLogNumberUnLocked/ByLogNumberUnLocked" routerLinkActive="active" (click)="setEmptySearchStr()">By Log Number (UnLocked)</a></li>
+                   <li><a routerLink="ByLogNumberLocked/ByLogNumberLocked" routerLinkActive="active" (click)="setEmptySearchStr()">By Log Number (Locked)</a></li>
+                   <li><a routerLink="ByLeadAnalystUnLocked/ByLeadAnalystUnLocked" routerLinkActive="active" (click)="setEmptySearchStr()">By Lead Analyst (UnLocked)</a></li>
+                   <li><a routerLink="ByLeadAnalystLocked/ByLeadAnalystLocked" routerLinkActive="active" (click)="setEmptySearchStr()">By Lead Analyst (Locked)</a></li>
+                   <li><a routerLink="ByAssistAnalyst/ByAssistAnalyst" routerLinkActive="active" (click)="setEmptySearchStr()">By Assist Analyst</a></li>
+                   <li><a routerLink="ByBusinessPartner/ByBusinessPartner" routerLinkActive="active" (click)="setEmptySearchStr()">By Business Partner</a></li>
+                   <li><a routerLink="ByAuthor/ByAuthor" routerLinkActive="active" (click)="setEmptySearchStr()">By Author</a></li>
+                   <li><a routerLink="ByStatus/ByStatus" routerLinkActive="active" (click)="setEmptySearchStr()">By Status</a></li>
+                   <li><a routerLink="ByBPCRPDate/ByBPCRPDate" routerLinkActive="active" (click)="setEmptySearchStr()">By BPCRB Date</a></li>
+                   <li><a routerLink="ByChannel/ByChannel" routerLinkActive="active" (click)="setEmptySearchStr()">By Channel</a></li>
+                   <li><a routerLink="ByReviewer/ByReviewer" routerLinkActive="active" (click)="setEmptySearchStr()">By Reviewer</a></li>
+                   <li><a routerLink="PeerReviewResults/PeerReviewResults" routerLinkActive="active" (click)="setEmptySearchStr()">Peer Review Results</a></li>
+                </ul>  
+                
+                <a href="#list2"   class="list-group-item collapsed" data-toggle="collapse" aria-expanded="false"><span>AM</span></a>
+                <ul class="collapse list-unstyled submenu" id="list2" role="menu">
+                    <li><a routerLink="MyreviewsAM/MyreviewsAM" routerLinkActive="active" (click)="setEmptySearchStr()">My Reviews</a></li>
+                    <li><a routerLink="ByLogNumberUnLockedAM/ByLogNumberUnLockedAM" routerLinkActive="active" (click)="setEmptySearchStr()">By Log Number (UnLocked)</a></li>
+                    <li><a routerLink="ByLogNumberLockedAM/ByLogNumberLockedAM" routerLinkActive="active" (click)="setEmptySearchStr()">By Log Number (Locked)</a></li>
+                    <li><a routerLink="ByLeadAnalystUnLockedAM/ByLeadAnalystUnLockedAM" routerLinkActive="active" (click)="setEmptySearchStr()">By Lead Analyst (UnLocked)</a></li>
+                    <li><a routerLink="ByLeadAnalystLockedAM/ByLeadAnalystLockedAM" routerLinkActive="active" (click)="setEmptySearchStr()">By Lead Analyst (Locked)</a></li>
+                    <li><a routerLink="ByBusinessPartnerAM/ByBusinessPartnerAM" routerLinkActive="active" (click)="setEmptySearchStr()">By Business Partner</a></li>
+                </ul>
+
+                <a href="#list3"   class="list-group-item collapsed" data-toggle="collapse" aria-expanded="false"><span>AP</span></a>
+                <ul class="collapse list-unstyled submenu" id="list3" role="menu">
+                    <li><a routerLink="MyreviewsAP/MyreviewsAP" routerLinkActive="active" (click)="setEmptySearchStr()">My Reviews</a></li>
+                    <li><a routerLink="ByLogNumberUnLockedAP/ByLogNumberUnLockedAP" routerLinkActive="active" (click)="setEmptySearchStr()">By Log Number (UnLocked)</a></li>
+                    <li><a routerLink="ByLogNumberLockedAP/ByLogNumberLockedAP" routerLinkActive="active" (click)="setEmptySearchStr()">By Log Number (Locked)</a></li>
+                    <li><a routerLink="ByLeadAnalystUnLockedAP/ByLeadAnalystUnLockedAP" routerLinkActive="active" (click)="setEmptySearchStr()">By Lead Analyst (UnLocked)</a></li>
+                    <li><a routerLink="ByLeadAnalystLockedAP/ByLeadAnalystLockedAP" routerLinkActive="active" (click)="setEmptySearchStr()">By Lead Analyst (Locked)</a></li>
+                    <li><a routerLink="ByBusinessPartnerAP/ByBusinessPartnerAP" routerLinkActive="active" (click)="setEmptySearchStr()">By Business Partner</a></li>
+                </ul>
+
+                <a href="#list4"   class="list-group-item collapsed" data-toggle="collapse" aria-expanded="false"><span>EMEA</span></a>
+                <ul class="collapse list-unstyled submenu" id="list4" role="menu">
+                    <li><a routerLink="MyreviewsEMEA/MyreviewsEMEA" routerLinkActive="active" (click)="setEmptySearchStr()">My Reviews</a></li>
+                    <li><a routerLink="ByLogNumberUnLockedEMEA/ByLogNumberUnLockedEMEA" routerLinkActive="active" (click)="setEmptySearchStr()">By Log Number (UnLocked)</a></li>
+                    <li><a routerLink="ByLogNumberLockedEMEA/ByLogNumberLockedEMEA" routerLinkActive="active" (click)="setEmptySearchStr()">By Log Number (Locked)</a></li>
+                    <li><a routerLink="ByLeadAnalystUnLockedEMEA/ByLeadAnalystUnLockedEMEA" routerLinkActive="active" (click)="setEmptySearchStr()">By Lead Analyst (UnLocked)</a></li>
+                    <li><a routerLink="ByLeadAnalystLockedEMEA/ByLeadAnalystLockedEMEA" routerLinkActive="active" (click)="setEmptySearchStr()">By Lead Analyst (Locked)</a></li>
+                    <li><a routerLink="ByBusinessPartnerEMEA/ByBusinessPartnerEMEA" routerLinkActive="active" (click)="setEmptySearchStr()">By Business Partner</a></li>
+                </ul>
+
+                <a href="#list5"   class="list-group-item collapsed" data-toggle="collapse" aria-expanded="false"><span>LA</span></a>
+                <ul class="collapse list-unstyled submenu" id="list5" role="menu">
+                    <li><a routerLink="MyreviewsLA/MyreviewsLA" routerLinkActive="active" (click)="setEmptySearchStr()">My Reviews</a></li>
+                    <li><a routerLink="ByLogNumberUnLockedLA/ByLogNumberUnLockedLA" routerLinkActive="active" (click)="setEmptySearchStr()">By Log Number (UnLocked)</a></li>
+                    <li><a routerLink="ByLogNumberLockedLA/ByLogNumberLockedLA" routerLinkActive="active" (click)="setEmptySearchStr()">By Log Number (Locked)</a></li>
+                    <li><a routerLink="ByLeadAnalystUnLockedLA/ByLeadAnalystUnLockedLA" routerLinkActive="active" (click)="setEmptySearchStr()">By Lead Analyst (UnLocked)</a></li>
+                    <li><a routerLink="ByLeadAnalystLockedLA/ByLeadAnalystLockedLA" routerLinkActive="active" (click)="setEmptySearchStr()">By Lead Analyst (Locked)</a></li>
+                    <li><a routerLink="ByBusinessPartnerLA/ByBusinessPartnerLA" routerLinkActive="active" (click)="setEmptySearchStr()">By Business Partner</a></li>
+                </ul>
+
+                <a href="#list6"   class="list-group-item collapsed" data-toggle="collapse" aria-expanded="false"><span>JAPAN</span></a>
+                <ul class="collapse list-unstyled submenu" id="list6" role="menu">
+                    <li> <a routerLink="MyreviewsJAPAN/MyreviewsJAPAN" routerLinkActive="active" (click)="setEmptySearchStr()">My Reviews</a></li>
+                    <li><a routerLink="ByLogNumberUnLockedJAPAN/ByLogNumberUnLockedJAPAN" routerLinkActive="active" (click)="setEmptySearchStr()">By Log Number (UnLocked)</a></li>
+                    <li><a routerLink="ByLogNumberLockedJAPAN/ByLogNumberLockedJAPAN" routerLinkActive="active" (click)="setEmptySearchStr()">By Log Number (Locked)</a></li>
+                    <li><a routerLink="ByLeadAnalystUnLockedJAPAN/ByLeadAnalystUnLockedJAPAN" routerLinkActive="active" (click)="setEmptySearchStr()">By Lead Analyst (UnLocked)</a></li>
+                    <li><a routerLink="ByLeadAnalystLockedJAPAN/ByLeadAnalystLockedJAPAN" routerLinkActive="active" (click)="setEmptySearchStr()">By Lead Analyst (Locked)</a></li>
+                    <li><a routerLink="ByBusinessPartnerJAPAN/ByBusinessPartnerJAPAN" routerLinkActive="active" (click)="setEmptySearchStr()">By Business Partner</a></li>
+                </ul>
+           
+                <a href="#list9"   class="list-group-item collapsed" data-toggle="collapse" aria-expanded="false"><span>GCG</span></a>
+                <ul class="collapse list-unstyled submenu" id="list9" role="menu">
+                    <li><a routerLink="MyreviewsGCG/MyreviewsGCG" routerLinkActive="active" (click)="setEmptySearchStr()">My Reviews</a></li>
+                    <li><a routerLink="ByLogNumberUnLockedGCG/ByLogNumberUnLockedGCG" routerLinkActive="active" (click)="setEmptySearchStr()">By Log Number (UnLocked)</a></li>
+                    <li><a routerLink="ByLogNumberLockedGCG/ByLogNumberLockedGCG" routerLinkActive="active" (click)="setEmptySearchStr()">By Log Number (Locked)</a></li>
+                    <li><a routerLink="ByLeadAnalystUnLockedGCG/ByLeadAnalystUnLockedGCG" routerLinkActive="active" (click)="setEmptySearchStr()">By Lead Analyst (UnLocked)</a></li>
+                    <li><a routerLink="ByLeadAnalystLockedGCG/ByLeadAnalystLockedGCG" routerLinkActive="active" (click)="setEmptySearchStr()">By Lead Analyst (Locked)</a></li>
+                    <li><a routerLink="ByBusinessPartnerGCG/ByBusinessPartnerGCG" routerLinkActive="active" (click)="setEmptySearchStr()">By Business Partner</a></li>
+                </ul>
+            
+                
+            <li *ngIf="canTakeReports">
+                    <a href="#list7" class="list-group-item collapsed" data-toggle="collapse" aria-expanded="false"><span>Reports</span></a>
+                    <ul class="collapse list-unstyled submenu" id="list7" role="menu">
+                        <li><a routerLink="report/adhoc" routerLinkActive="active" (click)="setEmptySearchStr()">Adhoc report</a></li>
+                    </ul>
+            </li>
+            <li *ngIf="isAdmin">
+                <a href="#list8" class="list-group-item collapsed" data-toggle="collapse" aria-expanded="false"><span>Maintenance</span></a>
+                <ul class="collapse list-unstyled submenu" id="list8" role="menu">
+                    <li><a routerLink="trashdocuments" routerLinkActive="active">Trash</a></li>  
+                    <li><a routerLink="fixedKeyword" routerLinkActive="active">Keywords</a></li>
+                    <li><a routerLink="profileform" routerLinkActive="active">Application profile</a></li>
+                    <li><a routerLink="maintenanceview" routerLinkActive="active">Maintenance View(Orphan docs)</a></li>		
+                </ul>     
+            </li>
+        </ul>
+    </nav>
+</div>

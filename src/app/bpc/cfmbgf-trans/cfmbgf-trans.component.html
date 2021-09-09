@@ -1,0 +1,538 @@
+<!--CFM-BGF Transaction Document -->
+<form #frm="ngForm">
+  <div class="col-md-12">
+    <div class="panel panel-primary">
+      <div class="panel-heading" id="panelhead-affix" margin-bottom="1px">
+        <h4>CFM-BGF Transaction document: {{model.txtLogNo}}</h4>
+        <div class="form-group" align="right">
+          <button [disabled]="isReadOnly || isLoading" *ngIf="model.lock_status !== '1'" type="submit"
+            (click)="save('Save',frm)" class="btn btn-info">Save</button>
+          <!-- <button *ngIf="model.lock_status == '1' || isReadOnly == true" type="button" (click)="close()" class="btn btn-info">Close</button> -->
+          <button type="button" (click)="confirmClose(frm)" class="btn btn-info">Close</button>
+          <button [disabled]="isReadOnly || isLoading|| model.lock_status=='1'" *ngIf="model.txtStatus  === 'Created'" type="button"
+            class="btn btn-info" data-toggle="modal" data-target="#DeleteConfirmation">Delete</button>
+          <button [disabled]="isReadOnly || isLoading || model.lock_status=='1'" type="button" (click)="refreshMissingInfo('Save',frm)"
+            class="btn btn-info">Refresh from Main doc</button>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-8">
+        </div>
+        <div class="col-md-4">
+          <span *ngIf="model._id !=''">
+            <a style="font-weight:bold" id="Copy form URL to clip board" align="right" (click)="copyDocLink()">Copy
+              record URL to clipboard</a>
+          </span>
+        </div>
+      </div>
+
+
+      <div class="panel-body">
+        <div class="col-md-12">
+          <input type="hidden" class="form-control" id="dtcreated" name="dtcreated" [(ngModel)]="model.dtcreated">
+          <input type="hidden" class="form-control" id="dtmodified" name="dtmodified" [(ngModel)]="model.dtmodified">
+          <input type="hidden" class="form-control" id="_id" name="_id">
+          <input type="hidden" class="form-control" id="_rev" name="_rev">
+          <input type="hidden" class="form-control" id="Form" name="Form">
+          <input type="hidden" class="form-control" id="txtLAName" name="txtLAName">
+          <input type="hidden" class="form-control" id="txtAssistAnalyst" name="txtAssistAnalyst">
+          <input type="hidden" class="form-control" id="DocCreator" name="DocCreator">
+          <input type="hidden" class="form-control" id="dlgLogApprovers" name="dlgLogApprovers">
+          <input type="hidden" class="form-control" id="lock_status" name="lock_status">
+
+          <fieldset [disabled]="isReadOnly || isLoading">
+            <div class="row">
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label for="txtStatus" id="label" class="control-label col-xs-offset-1 col-xs-5">Status:</label>
+                  <input type="text" class="col-xs-5" readonly id="txtStatus" name="txtStatus"
+                    [(ngModel)]="model.txtStatus">
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label for="signature" class="control-label col-xs-offset-3 col-xs-3">By:</label>
+                  <input type="text" class="col-xs-5" readonly id="signature" name="signature"
+                    [(ngModel)]="model.signature">
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label for="sigtimestamp" class="col-xs-2">On:</label>
+                  <input type="text" readonly class="col-xs-=5" id="sigtimestamp" name="sigtimestamp"
+                    [(ngModel)]="model.sigtimestamp">
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="txtLogNo">Log Number</label>
+                  <input readonly type="text" class="form-control" id="txtLogNo" name="txtLogNo"
+                    [(ngModel)]="model.txtLogNo">
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="txtChannel">Channel</label>
+                  <input readonly type="text" class="form-control" id="txtChannel" name="txtChannel"
+                    [(ngModel)]="model.txtChannel">
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="txtRvwType">Type of Review</label>
+                  <input readonly type="text" class="form-control" id="txtRvwType" name="txtRvwType"
+                    [(ngModel)]="model.txtRvwType">
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="txtRvwMethod">Method of Review</label>
+                  <input readonly type="text" class="form-control" id="txtRvwMethod" name="txtRvwMethod"
+                    [(ngModel)]="model.txtRvwMethod">
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="txTransactionNum">Sample #</label>
+                  <input type="text" class="form-control" placeholder="Enter Sample #" id="txTransactionNum"
+                    name="txTransactionNum" [(ngModel)]="model.txTransactionNum">
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="txEnduserTr">Claim Number</label>
+                  <input type="text" class="form-control" placeholder="Enter Claim Number" id="txEnduserTr"
+                    name="txEnduserTr" [(ngModel)]="model.txEnduserTr">
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="txCountry">Country</label>
+                  <input type="text" class="form-control" readonly id="txCountry" name="txCountry"
+                    [(ngModel)]="model.txCountry">
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="txState">IOT/GMU:</label>
+                  <input type="text" class="form-control" readonly id="txMajorMarket" name="txMajorMarket"
+                    [(ngModel)]="model.txMajorMarket">
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="">IMT/GMT:</label>
+                  <input type="text" class="form-control" readonly id="txGrowthMarket" name="txGrowthMarket"
+                    [(ngModel)]="model.txGrowthMarket">
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="txtMktgEventType">Type of Marketing Event</label>
+                  <select id="txtMktgEventType" class="form-control" name="txtMktgEventType"
+                    [(ngModel)]="model.txtMktgEventType">
+                    <option value="">Select Marketing Event Type </option>
+                    <option *ngFor="let MktgEventType of MktgEventTypes" value={{MktgEventType}}>
+                      {{MktgEventType}}
+                    </option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label for="txtGrowthMarket">Note : Please ensure that any files or attachments referenced inside a
+                    PDF file
+                    are also included as an actual file attachment in the RDL document</label>
+
+                </div>
+              </div>
+            </div>
+            <table class="table table-bordered table-hover" id="tab_logic">
+              <thead>
+                <tr>
+                  <th class="text-center">
+                  </th>
+                  <th class="text-center">
+                    Document Type
+                  </th>
+                  <th class="text-center">
+                    Comments (if a cell is left blank, either indicate N/A; reference where it can be found, including
+                    page #s if applicable;
+                    or explain why it is left blank)
+                  </th>
+                  <th class="text-center">
+                    Attachments
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>
+                  </td>
+                  <td>
+                    <label>Cover Sheet(If Applicable)</label>
+                  </td>
+                  <td>
+                    <label for="txtCoverSheet"></label>
+                    <textarea rows="3" cols="50" class="form-control" id="txtCoverSheet" name="txtCoverSheet"
+                      [(ngModel)]="model.txtCoverSheet"></textarea>
+                  </td>
+                  <td>
+                    <label for="rtCoverSheet"></label>
+                    <input type="text" class="form-control" id="rtCoverSheet" name="rtCoverSheet"
+                      [(ngModel)]="model.rtCoverSheet"> <br>
+                    <label for="rtCoverSheet" class="btn btn-default btn-file">
+                      Drag and drop here
+                      <input #fileInput1 type="file" id="rtCoverSheetAttach" multiple
+                        (change)="getrtCoverSheetAttachFiles($event,'getrtCoverSheetAttachFiles')">
+                    </label>
+                    <div id="rtCoverSheetFile"></div>
+                  </td>
+
+
+                </tr>
+                <tr>
+                  <td>
+                  </td>
+                  <td>
+                    <label>Vendor Verification<br><br> (Department of State Research,<br> Map Research, Duns, etc)?<br>
+                      *For GDPR, Do not put private <br>information into the tool.
+                    </label>
+                  </td>
+                  <td>
+                    <label for="txtVendorVerif"></label>
+                    <textarea rows="3" cols="50" class="form-control" id="txtVendorVerif" name="txtVendorVerif"
+                      [(ngModel)]="model.txtVendorVerifDoc"></textarea>
+                  </td>
+                  <td>
+                    <label for="rtVendorVerif"></label>
+                    <input type="text" class="form-control" id="rtVendorVerif" name="rtVendorVerif"
+                      [(ngModel)]="model.rtVendorVerifDoc"> <br>
+                    <label for="rtVendorVerif" class="btn btn-default btn-file">
+                      Drag and drop here
+                      <input #fileInput2 type="file" id="rtVendorVerifAttach" multiple
+                        (change)="getrtVendorVerifAttachFiles($event,'getrtVendorVerifAttachFiles')">
+                    </label>
+                    <div id="rtVendorVerifFile"></div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                  </td>
+                  <td>
+                    <label>Marketing Vendor Invoices?</label>
+                  </td>
+                  <td>
+                    <label for="txtMktgVendorInvoice"></label>
+                    <textarea rows="3" cols="50" class="form-control" id="txtMktgVendorInvoice"
+                      name="txtMktgVendorInvoice" [(ngModel)]="model.txtMktgVendorInvoice"></textarea>
+                  </td>
+                  <td>
+                    <label for="rtMktgVendorInvoice"></label>
+                    <input type="text" class="form-control" id="rtMktgVendorInvoice" name="rtMktgVendorInvoice"
+                      [(ngModel)]="model.rtMktgVendorInvoice"><br>
+                    <label for="rtMktgVendorInvoice" class="btn btn-default btn-file">
+                      Drag and drop here
+                      <input #fileInput3 type="file" id="rtMktgVendorInvoiceAttach" multiple
+                        (change)="getrtMktgVendorInvoiceAttachFiles($event,'getrtMktgVendorInvoiceAttachFiles')">
+                    </label>
+                    <div id="rtMktgVendorInvoiceFile"></div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                  </td>
+                  <td>
+                    <label>Marketing Plan/SOW/<br>Presentations/Other Proof of Performance?</label>
+                  </td>
+                  <td>
+                    <label for="txtMktgPlan"></label>
+                    <textarea rows="3" cols="50" class="form-control" id="txtMktgPlan" name="txtMktgPlan"
+                      [(ngModel)]="model.txtMktgPlan"></textarea>
+                  </td>
+                  <td>
+                    <label for="rtMktgPlan"></label>
+                    <input type="text" class="form-control" id="rtMktgPlan" name="rtMktgPlan"
+                      [(ngModel)]="model.rtMktgPlan"><br>
+                    <label for="rtMktgPlan" class="btn btn-default btn-file">
+                      Drag and drop here
+                      <input #fileInput4 type="file" id="rtMktgPlanAttach" multiple
+                        (change)="getrtMktgPlanAttachFiles($event,'getrtMktgPlanAttachFiles')">
+                    </label>
+                    <div id="rtMktgPlanFile"></div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                  </td>
+                  <td>
+                    <label>Attendee List?
+                    </label>
+                  </td>
+                  <td>
+                    <label for="txtAttendeeList"></label>
+                    <textarea rows="3" cols="50" class="form-control" id="txtAttendeeList" name="txtAttendeeList"
+                      [(ngModel)]="model.txtAttendeeList"></textarea>
+                  </td>
+                  <td>
+                    <label for="rtAttendeeList"></label>
+                    <input type="text" class="form-control" id="rtAttendeeList" name="rtAttendeeList"
+                      [(ngModel)]="model.rtAttendeeList "><br>
+                    <label for="rtAttendeeList" class="btn btn-default btn-file">
+                      Drag and drop here
+                      <input #fileInput5 type="file" id="rtAttendeeListAttach" multiple
+                        (change)="getrtAttendeeListAttachFiles($event,'getrtAttendeeListAttachFiles')">
+                    </label>
+                    <div id="rtAttendeeListFile"></div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                  </td>
+                  <td>
+                    <label>Proof of Payment? <br>* Proof of Payment, as evidenced by endorsed <br>cancelled/cashed
+                      check, <br>front of check with corresponding bank statement, wire transfer, credit card receipt
+                      and/or statement.
+                    </label>
+                  </td>
+                  <td>
+                    <label for="txtProofPay"></label>
+                    <textarea rows="3" cols="50" class="form-control" id="txtProofPay" name="txtProofPay"
+                      [(ngModel)]="model.txtProofPay"></textarea>
+                  </td>
+                  <td>
+                    <label for="rtProofPay"></label>
+                    <input type="text" class="form-control" id="rtProofPay" name="rtProofPay"
+                      [(ngModel)]="model.rtProofPay"><br>
+                    <label for="rtProofPay" class="btn btn-default btn-file">
+                      Drag and drop here
+                      <input #fileInput6 type="file" id="rtProofPayAttach" multiple
+                        (change)="getrtProofPayAttachFiles($event,'getrtProofPayAttachFiles')">
+                    </label>
+                    <div id="rtProofPayFile"></div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                  </td>
+                  <td>
+                    <label>Personnel Salary? <br>(Time Sheets, Rate Cards, Time Tracking, etc)?
+                    </label>
+                  </td>
+                  <td>
+                    <label for="txtSalary"></label>
+                    <textarea rows="3" cols="50" class="form-control" id="txtSalary" name="txtSalary"
+                      [(ngModel)]="model.txtSalary"></textarea>
+                  </td>
+                  <td>
+                    <label for="rtSalary"></label>
+                    <input type="text" class="form-control" id="rtSalary" name="rtSalary" [(ngModel)]="model.rtSalary"><br>
+                    <label for="rtSalary" class="btn btn-default btn-file">
+                      Drag and drop here
+                      <input #fileInput7 type="file" id="rtSalaryAttach" multiple
+                        (change)="getrtSalaryAttachFiles($event,'getrtSalaryAttachFiles')">
+                    </label>
+                    <div id="rtSalaryFile"></div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                  </td>
+                  <td>
+                    <label>Proof of Employment? <br>(Redacted W2, 1099, other forms) <br>*For GDPR, Do not put private information into the tool.
+                    </label>
+                  </td>
+                  <td>
+                    <label for="txtProofEmployment"></label>
+                    <textarea rows="3" cols="50" class="form-control" id="txtProofEmployment" name="txtProofEmployment"
+                      [(ngModel)]="model.txtProofEmployment"></textarea>
+                  </td>
+                  <td>
+                    <label for="rtProofEmployment"></label>
+                    <input type="text" class="form-control" id="rtProofEmployment" name="rtProofEmployment"
+                      [(ngModel)]="model.rtProofEmployment"><br>
+                    <label for="rtProofEmployment" class="btn btn-default btn-file">
+                      Drag and drop here
+                      <input #fileInput8 type="file" id="rtProofEmploymentAttach" multiple
+                        (change)="getrtProofEmploymentAttachFiles($event,'getrtProofEmploymentAttachFiles')">
+                    </label>
+                    <div id="rtProofEmploymentFile"></div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                  </td>
+                  <td>
+                    <label>Receipts for Inelligible Costs? <br>(Airline Upgrades, "No Show" Hotel Fees, Other Receipts
+                      paid against T&C's)?
+                    </label>
+                  </td>
+                  <td>
+                    <label for="txtInelligible"></label>
+                    <textarea rows="3" cols="50" class="form-control" id="txtInelligible" name="txtInelligible"
+                      [(ngModel)]="model.txtInelligible"></textarea>
+                  </td>
+                  <td>
+                    <label for="rtInelligible"></label>
+                    <input type="text" class="form-control" id="rtInelligible" name="rtInelligible"
+                      [(ngModel)]="model.rtInelligible"><br>
+                    <label for="rtInelligible" class="btn btn-default btn-file">
+                      Drag and drop here
+                      <input #fileInput9 type="file" id="rtInelligibleAttach" multiple
+                        (change)="getrtInelligibleAttachFiles($event,'getrtInelligibleAttachFiles')">
+                    </label>
+                    <div id="rtInelligibleFile"></div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                  </td>
+                  <td>
+                    <label> Exception Approval(s)?</label>
+                  </td>
+                  <td>
+                    <label for="txtException"></label>
+                    <textarea rows="3" cols="50" class="form-control" id="txtException" name="txtException"
+                      [(ngModel)]="model.txtException"></textarea>
+                  </td>
+                  <td>
+                    <label for="rtException"></label>
+                    <input type="text" class="form-control" id="rtException" name="rtException"
+                      [(ngModel)]="model.rtException"><br>
+                    <label for="rtException" class="btn btn-default btn-file">
+                      Drag and drop here
+                      <input #fileInput10 type="file" id="rtExceptionAttach" multiple
+                        (change)="getrtExceptionAttachFiles($event,'getrtExceptionAttachFiles')">
+                    </label>
+                    <div id="rtExceptionFile"></div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                  </td>
+                  <td>
+                    <label> Other Documentation <br><br>(Emails, Meal Calculation Worksheets, 
+                      Other Supporting Worksheets, etc.)*Please explain what these are in the comments.?
+                    </label>
+                  </td>
+                  <td>
+                    <label for="txtOtherDocs"></label>
+                    <textarea rows="3" cols="50" class="form-control" id="txtOtherDocs" name="txtOtherDocs"
+                      [(ngModel)]="model.txtOtherDocs"></textarea>
+                  </td>
+                  <td>
+                    <label for="rtOtherDocs"></label>
+                    <input type="text" class="form-control" id="rtOtherDocs" name="rtOtherDocs"
+                      [(ngModel)]="model.rtOtherDocs"><br>
+                    <label for="rtOtherDocs" class="btn btn-default btn-file">
+                      Drag and drop here
+                      <input #fileInput11 type="file" id="rtOtherDocsAttach" multiple
+                        (change)="getrtOtherDocsAttachFiles($event,'getrtOtherDocsAttachFiles')">
+                    </label>
+                    <div id="rtOtherDocsFile"></div>
+                  </td>
+                </tr>
+
+              </tbody>
+            </table>
+          </fieldset>
+
+          <!--Audit trail functionality -->
+          <div class="col-md-12">
+            <div class="panel panel-primary">
+              <div class="panel-heading">
+                <h4 class="panel-title">
+                  <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">
+                    <span class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></span>Audit Trail</a>
+                </h4>
+              </div>
+              <div id="collapse1" class="panel-collapse collapse">
+                <div class="panel-body">
+                  <fieldset [disabled]="isReadOnly || isLoading">
+                    <div class="row">
+                      <div class="form-group">
+                        <textarea rows="2" cols="100" class="form-control" id="txtCFMBGFAudit" name="txtCFMBGFAudit"
+                          [(ngModel)]="model.txtCFMBGFAudit" readonly></textarea>
+                      </div>
+                    </div>
+                  </fieldset>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+
+
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+
+<!--Delete Confirmation-->
+<fieldset [disabled]="isReadOnly || isLoading">
+  <div class="modal fade" id="DeleteConfirmation" tabindex="-1" role="dialog" aria-labelledby="Delete Form"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h5 class="modal-title">Delete form</h5>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            Please confirm do you want to Delete?
+          </div>
+        </div>
+        <div class="modal-footer">
+          <a data-dismiss="modal" (click)="delete()" class="btn btn-primary">Yes</a>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</fieldset>
+
+<!--Confirm close model-->
+<div class="modal fade" id="closeConfirmation" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h5 class="modal-title">Close CFM-BGF Transaction document form</h5>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          Do you want save the CFM-BGF Transaction document form before closing?
+        </div>
+      </div>
+      <div class="modal-footer">
+        <a data-dismiss="modal" (click)="save('saveNclose',frm)" class="btn btn-primary">Yes</a>
+        <a data-dismiss="modal" (click)="close()" class="btn btn-primary">No</a>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>

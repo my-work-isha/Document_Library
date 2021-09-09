@@ -1,0 +1,27 @@
+applications:
+- path: .
+  memory: 1024M
+  instances: 1
+  # domain: w3ibm.mybluemix.net
+  # name: dev-rdl
+  disk_quota: 1024M
+  command: node server.js
+  # health-check-type: process
+  env:
+    APP_ENV: dev
+    client_id: NWJhODhkODgtOWI0MS00
+    client_secret: ODg5ZmY3MWItYWZmOS00
+    authorization_url: https://w3id-test.sso.ibm.com/isam/oidc/endpoint/amapp-runtime-oidcidp/authorize
+    token_url: https://w3id-test.sso.ibm.com/isam/oidc/endpoint/amapp-runtime-oidcidp/token
+    issuer_id: https://w3id-test.sso.ibm.com/isam
+    callback_url: https://rdl-dev.w3ibm.mybluemix.net/auth/sso/callback
+    cert: /oidc_w3idTEST_dev.cer
+    NEW_RELIC_APP_NAME: rdl_dev
+    NEW_RELIC_LICENSE_KEY: b86e105f4fecf1b216140d806298cc918460eb48
+    bg_app_access: bpcompliance_users_dev,dev-bpc-apps_admin
+    publicdb2connectionURL: DATABASE=BLUDB;HOSTNAME=dashdb-txn-flex-yp-dal09-24.services.dal.bluemix.net;PORT=50001;PROTOCOL=TCPIP;UID=bluadmin;PWD=MmIxODIzZjQyY2Mw;Security=SSL;
+
+  services:
+    - dev-db2
+    - dev-bluemail
+    - bpc-cloudant-dev

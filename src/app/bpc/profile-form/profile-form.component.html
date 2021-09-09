@@ -1,0 +1,47 @@
+<!--Master Business Partner docuemnt form -->
+<div class="col-md-12">
+        
+  <div class="panel panel-primary">
+          <div class="panel-heading">
+            <h4>Welcome to Profile Setting Form </h4>
+          </div>
+          <div class="panel-body">             
+                  <div class="col-md-12">                   
+                        <input type="hidden" class="form-control" id="_id" name="_id" [(ngModel)]="model._id">
+                        <input type="hidden" class="form-control" id="_rev" name="_rev" [(ngModel)]="model._rev">
+                        <input type="hidden" class="form-control" id="Form" name="Form" [(ngModel)]="model.Form">                   
+                      
+  <form>                    
+                   
+  <div class="row">
+        <div class="col-md-6">                          
+         <div class="form-group">
+           <label for="USLServer">Principal Name:</label>
+           <input type="text" class="form-control" id="principalName" name="principalName" [(ngModel)]="model.principalName" > 
+          </div> 
+       </div> 
+   </div>
+
+<div class="row">
+    <div class="col-md-6">                          
+     <div class="form-group">
+       <label for="USLPath">Application Base URL:</label>
+       <input type="text" class="form-control" id="appBaseURL" name="appBaseURL" [(ngModel)]="model.appBaseURL" > 
+      </div> 
+   </div> 
+</div>                                           
+                    </form>                        
+                    </div>
+                    
+          </div>
+      </div>
+      
+</div>
+ 
+<div class="modal-footer">
+  <p align="center"> 
+  <button type="submit" (click)="save()"  class="btn btn-primary">Update</button>
+  <button type="submit" (click)="close()"  class="btn btn-primary">Close</button>
+  </p>
+</div>
+
